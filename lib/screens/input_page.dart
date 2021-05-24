@@ -6,6 +6,8 @@ import 'package:bmi_calculator/constants.dart';
 import 'results_page.dart';
 import 'package:bmi_calculator/components/bottom_button.dart';
 import 'package:bmi_calculator/components/round_icon_button.dart';
+import 'package:bmi_calculator/calculator_brain.dart';
+import 'package:bmi_calculator/components/toast_message.dart';
 
 enum Sex { male, female }
 
@@ -13,6 +15,8 @@ class InputPage extends StatefulWidget {
   @override
   _InputPageState createState() => _InputPageState();
 }
+
+ToastMessage toastMessage = new ToastMessage();
 
 class _InputPageState extends State<InputPage> {
   Sex selectedSex;
@@ -143,7 +147,12 @@ class _InputPageState extends State<InputPage> {
                             icon: FontAwesomeIcons.plus,
                             onPressed: () {
                               setState(() {
-                                weight++;
+                                if (weight >= 1 && weight < 250) {
+                                  weight++;
+                                } else {
+                                  toastMessage
+                                      .showToast('Weight Limit Exceed !!');
+                                }
                               });
                             },
                           ),
@@ -154,7 +163,12 @@ class _InputPageState extends State<InputPage> {
                             icon: FontAwesomeIcons.minus,
                             onPressed: () {
                               setState(() {
-                                weight--;
+                                if (weight > 1 && weight <= 250) {
+                                  weight--;
+                                } else {
+                                  toastMessage
+                                      .showToast('Weight can\'t be zero');
+                                }
                               });
                             },
                           ),
@@ -185,7 +199,11 @@ class _InputPageState extends State<InputPage> {
                             icon: FontAwesomeIcons.plus,
                             onPressed: () {
                               setState(() {
-                                age++;
+                                if (age >= 1 && age < 100) {
+                                  age++;
+                                } else {
+                                  toastMessage.showToast('Age Limit Exceed !!');
+                                }
                               });
                             },
                           ),
@@ -196,7 +214,11 @@ class _InputPageState extends State<InputPage> {
                             icon: FontAwesomeIcons.minus,
                             onPressed: () {
                               setState(() {
-                                age--;
+                                if (age > 1 && age <= 100) {
+                                  age--;
+                                } else {
+                                  toastMessage.showToast('Age can\'t be zero');
+                                }
                               });
                             },
                           ),
@@ -211,9 +233,17 @@ class _InputPageState extends State<InputPage> {
           BottomButton(
             buttonTitle: 'CALCULATE',
             onTap: () {
+              CalculatorBrain calc =
+                  CalculatorBrain(height: height, weight: weight);
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ResultPage()),
+                MaterialPageRoute(
+                  builder: (context) => ResultPage(
+                    bmiResult: calc.calculateBMI(),
+                    resultText: calc.getResult(),
+                    interpretation: calc.getInterpretation(),
+                  ),
+                ),
               );
             },
           ),
