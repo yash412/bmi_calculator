@@ -1,5 +1,4 @@
 # BMI-Calculator
-<<<<<<< HEAD
 
 A Flutter project.
 
