@@ -15,8 +15,6 @@ For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 =======
-A body mass index calculator
->>>>>>> 83eba350acdda19d9488453c1612a351fbc79dbc
 
 # Description
 A Simple Body Mass Index calculator application with a beautiful User Interface completely made with flutter. You just have to select the your parameters it will instantly gives your BMI with a message.
